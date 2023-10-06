@@ -26,6 +26,7 @@ public class Driverfactory {
 	public Properties prop;
 	public OptionsManager op;
 	public static String highlight; 
+	public ThreadLocal<WebDriver> tldriver= new ThreadLocal<WebDriver>();
 	// We call methods by using object reference variable
 	public WebDriver InitialiseDriver(Properties prop)
 	{    op= new OptionsManager(prop);
@@ -43,14 +44,16 @@ public class Driverfactory {
 //	    
 //				driver=new ChromeDriver();
 			WebDriverManager.chromedriver().setup();
-				driver=new ChromeDriver(op.getChromeOptions());
+				//driver=new ChromeDriver(op.getChromeOptions());
+			tldriver.set(new ChromeDriver(op.getChromeOptions()));
 			
 		}
 		else if(browsername.trim().equalsIgnoreCase("firefox"))
 		{
 			WebDriverManager.firefoxdriver().setup();
-			driver= new FirefoxDriver();// object creation
+			//driver= new FirefoxDriver();// object creation
 			//top costing
+			tldriver.set(new FirefoxDriver(op.getFirefoxoptions()));
 		}
 		else if(browsername.trim().equalsIgnoreCase("safari"))
 		{
@@ -69,10 +72,14 @@ public class Driverfactory {
 		{
 			System.out.println("enter the correct browser name:");
 		}
-		driver.manage().window().maximize();
-		driver.manage().deleteAllCookies();
-		driver.get(prop.getProperty("url"));
-		return driver;
+		getDriver().manage().window().maximize();
+		getDriver().manage().deleteAllCookies();
+		getDriver().get(prop.getProperty("url"));
+		return getDriver();
+	}
+	public synchronized WebDriver getDriver()
+	{
+	return	tldriver.get();
 	}
 	/**
 	 * Create a method for getting properties from config file

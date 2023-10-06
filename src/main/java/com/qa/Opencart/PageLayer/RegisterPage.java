@@ -18,6 +18,9 @@ public class RegisterPage {
  private By SubscribeNo=By.xpath("//label[normalize-space()='No']//input[@type='radio']");
  private By Checkbox= By.xpath("//input[@type='checkbox']");
  private By Continuebtn= By.xpath("//input[@type='submit']");
+ private By successm= By.cssSelector("div#content h1");
+ private By logoutlink=By.linkText("Logout");
+ private By Registerlink= By.linkText("Register");
 	public RegisterPage(WebDriver driver)
 	{
 		this.driver=driver;
@@ -27,6 +30,36 @@ public class RegisterPage {
 	
 	public void RegisterUser(String FirstName, String LastName, String Email, String Telephone, String Password, String Subscribe)
 	{
+		eleutil.doSendKeys(FN, FirstName);
+		eleutil.doSendKeys(LN, LastName);
+		eleutil.doSendKeys(Mail, Email);
+		eleutil.doSendKeys(tele, Telephone);
+		eleutil.doSendKeys(pwd, Password);
+		eleutil.doSendKeys(confirmpwd, Password);
+		if(Subscribe.equalsIgnoreCase("Yes"))
+		{
+			eleutil.doClick(Subscribeyes);
+		}
+		else
+		{
+			eleutil.doClick(SubscribeNo);
+		}
+		eleutil.doClick(Checkbox);
+		eleutil.doClick(Continuebtn);
 		
 	}
+	public boolean navigateToRegisterlink()
+	{
+		String message="Your Account Has Been Created";
+		String text=eleutil.getElement(successm).getText();
+		System.out.println(text);
+		if(text.contains(message))
+		{
+			eleutil.doClick(logoutlink);
+			eleutil.doClick(Registerlink);
+			return true;
+		}
+		return false;
+	}
+	
 }

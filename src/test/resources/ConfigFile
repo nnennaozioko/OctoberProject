@@ -1,0 +1,8 @@
+browser=chrome
+url=https://naveenautomationlabs.com/opencart/index.php?route=account/login
+username=sbharadwaj06@gmail.com
+password=bmw26RIDE*
+headless=false
+incognito=true
+highlight= true
+hubUrl=http:8080
