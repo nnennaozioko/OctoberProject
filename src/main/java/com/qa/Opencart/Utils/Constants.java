@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Constants {
 	//methods and variables should be static final
 	//application level
+	//This is constansts page
 	public final static String logintitle="Account Login";
 	public final static String Url="https://naveenautomationlabs.com/opencart/index.php?route=account/login";
 	public static final ArrayList<String> AccountHeaderExpectedValues()
